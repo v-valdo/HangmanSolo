@@ -4,7 +4,10 @@ using System.Text;
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
 UserManager u = new();
-Console.WriteLine(u.HashPassword("admin", out byte[] salt));
+string username = "user";
+string password = "password";
+byte[] hashedPassword = u.EncryptPassword(password, out byte[] salt);
+u.UserToDb(username, hashedPassword, salt);
 
 double lives = 2.5;
 
