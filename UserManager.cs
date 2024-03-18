@@ -6,7 +6,7 @@ namespace HangManSolo;
 public class UserManager
 {
 	private GameDbContext db = new();
-	public byte[] EncryptPassword(string password, out byte[] salt)
+	public string EncryptPassword(string password, out byte[] salt)
 	{
 		int keySize = 64;
 		int iterations = 200000;
@@ -21,10 +21,10 @@ public class UserManager
 			algo,
 			keySize);
 
-		return hash;
+		return Convert.ToHexString(hash);
 	}
 
-	public void UserToDb(string username, byte[] passwordHash, byte[] salt)
+	public void UserToDb(string username, string passwordHash, byte[] salt)
 	{
 		db.Add(new User
 		{

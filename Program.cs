@@ -6,8 +6,10 @@ Console.OutputEncoding = System.Text.Encoding.UTF8;
 UserManager u = new();
 string username = "user";
 string password = "password";
-byte[] hashedPassword = u.EncryptPassword(password, out byte[] salt);
+string hashedPassword = u.EncryptPassword(password, out byte[] salt);
 u.UserToDb(username, hashedPassword, salt);
+
+GameDbContext db = new();
 
 double lives = 2.5;
 

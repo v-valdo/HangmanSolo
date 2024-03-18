@@ -14,7 +14,7 @@ public class User
 {
 	public int Id { get; set; }
 	public string? Username { get; set; }
-	public byte[]? PassHash { get; set; }
+	public string? PassHash { get; set; }
 	public byte[]? Salt { get; set; }
 	public int Score { get; set; }
 }
