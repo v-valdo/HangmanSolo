@@ -3,7 +3,7 @@ using System.Text;
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-Encrypt u = new();
+UserManager u = new();
 Console.WriteLine(u.HashPassword("admin", out byte[] salt));
 
 double lives = 2.5;

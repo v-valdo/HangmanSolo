@@ -5,7 +5,11 @@ public class GameDbContext : DbContext
 {
 	public DbSet<User> Users { get; set; }
 	public DbSet<UserScore> Score { get; set; }
+
+	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+	=> optionsBuilder.UseNpgsql("Host=localhost;Database=hangman;Username=postgres;Password=postgres;");
 }
+
 
 public class User
 {
