@@ -23,7 +23,6 @@ public class UserManager
 
 		return Convert.ToHexString(hash);
 	}
-
 	public void UserToDb(string username, string passwordHash, byte[] salt)
 	{
 		db.Add(new User
@@ -34,5 +33,25 @@ public class UserManager
 			Score = 0
 		});
 		db.SaveChanges();
+	}
+
+	public bool Login(string username, string password)
+	{
+		var user = db.Users.FirstOrDefault(x => x.Username == x.Username);
+		if (user == null)
+		{
+			return false;
+		}
+		if (AuthPassword(password, user.PassHash, user.Salt))
+		{
+			return true;
+		}
+		return false;
+	}
+	public bool AuthPassword(string password, string hash, byte[] salt)
+	{
+		var compareHash = Rfc2898DeriveBytes.Pbkdf2(password, salt, 200000, HashAlgorithmName.SHA512, 64);
+
+		return CryptographicOperations.FixedTimeEquals(compareHash, Convert.FromHexString(hash));
 	}
 }

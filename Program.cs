@@ -3,13 +3,17 @@ using System.Text;
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-UserManager u = new();
+//Console.WriteLine("Welcome to HangManSolo");
+//Console.WriteLine("with encrypted registration, login and score keeping");
+//Console.WriteLine("1. Login");
+//Console.WriteLine("2. Register");
+
 string username = "user";
 string password = "password";
-string hashedPassword = u.EncryptPassword(password, out byte[] salt);
-u.UserToDb(username, hashedPassword, salt);
 
-GameDbContext db = new();
+UserManager um = new();
+
+Console.WriteLine(um.Login(username, password));
 
 double lives = 2.5;
 
