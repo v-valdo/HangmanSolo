@@ -3,17 +3,27 @@ using System.Text;
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-//Console.WriteLine("Welcome to HangManSolo");
-//Console.WriteLine("with encrypted registration, login and score keeping");
-//Console.WriteLine("1. Login");
-//Console.WriteLine("2. Register");
+while (true)
+{
+	Console.Clear();
+	Console.WriteLine("\tWelcome to HangManSolo");
+	Console.WriteLine("\twith encrypted registration, login and score keeping");
+	Console.WriteLine();
+	Console.WriteLine("\t1. Login");
+	Console.WriteLine("\t2. Register");
 
-string username = "user";
-string password = "password";
+	char userInput = Console.ReadKey().KeyChar;
+	Menu menu = new();
 
-UserManager um = new();
-
-Console.WriteLine(um.Login(username, password));
+	switch (userInput)
+	{
+		case '2':
+			await menu.RegisterAsync();
+			break;
+		default:
+			break;
+	}
+}
 
 double lives = 2.5;
 
