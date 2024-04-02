@@ -20,6 +20,9 @@ while (true)
 		case '2':
 			await menu.RegisterAsync();
 			break;
+		case '1':
+			string user = await menu.Login();
+			break;
 		default:
 			break;
 	}

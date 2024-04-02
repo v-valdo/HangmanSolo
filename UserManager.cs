@@ -34,32 +34,23 @@ public class UserManager
 		});
 		await db.SaveChangesAsync();
 	}
-	public bool Login(string username, string password)
+	public async Task<bool> Login(string username, string password)
 	{
 		var user = db.Users.FirstOrDefault(x => x.Username == x.Username);
 		if (user == null)
 		{
 			return false;
 		}
-		if (AuthPassword(password, user.PassHash, user.Salt))
+		if (await AuthPassword(password, user.PassHash, user.Salt))
 		{
 			return true;
 		}
 		return false;
 	}
-	public bool AuthPassword(string password, string hash, byte[] salt)
+	public async Task<bool> AuthPassword(string password, string hash, byte[] salt)
 	{
 		var compareHash = Rfc2898DeriveBytes.Pbkdf2(password, salt, 200000, HashAlgorithmName.SHA512, 64);
 
 		return CryptographicOperations.FixedTimeEquals(compareHash, Convert.FromHexString(hash));
-	}
-
-	public void LoginMenu()
-	{
-
-	}
-	public void RegisterMenu()
-	{
-
 	}
 }
