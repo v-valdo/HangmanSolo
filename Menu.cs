@@ -39,7 +39,7 @@ public class Menu
 			break;
 		}
 	}
-	public async Task<string> Login()
+	public async Task Login()
 	{
 		while (true)
 		{
@@ -54,7 +54,7 @@ public class Menu
 				Console.WriteLine($"User {username} successfully logged in...");
 				Console.WriteLine("Press any key to continue");
 				Console.ReadKey();
-				return username;
+				await PlayerMenu(username);
 			}
 			else
 			{
@@ -62,32 +62,48 @@ public class Menu
 				Thread.Sleep(300);
 				continue;
 			}
-
 		}
 	}
 
-	public async Task PlayerMenu(User user)
+	public async Task PlayerMenu(string username)
 	{
 		while (true)
 		{
-			Console.Clear();
-			Console.WriteLine("\tGame Menu");
-			Console.WriteLine("\t1. Play a game");
-			Console.WriteLine("\t2. View your score");
-			Console.WriteLine("\t3. View high score");
-			if (int.TryParse(Console.ReadLine(), out int c))
+			User? user = await db.Users.FirstOrDefaultAsync(x => x.Username == username);
+			if (user != null)
 			{
-				switch (c)
+				Console.Clear();
+				Console.WriteLine($"\tWelcome {username}!");
+				Console.WriteLine("\tGame Menu");
+				Console.WriteLine("\t1. Play a game");
+				Console.WriteLine("\t2. View your score");
+				Console.WriteLine("\t3. View high score");
+
+				if (int.TryParse(Console.ReadLine(), out int c))
 				{
-					case 1:
-						break;
-					case 2:
-						break;
+					switch (c)
+					{
+						case 1:
+							break;
+						case 2:
+							Console.Clear();
+							Console.WriteLine($"Your score is: {user.Score}");
+							Console.WriteLine("Press any key to continue");
+							Console.ReadLine();
+							break;
+					}
+				}
+				else
+				{
+					Console.WriteLine("Invalid choice!");
 				}
 			}
 			else
 			{
-				Console.WriteLine("Invalid choice!");
+				Console.WriteLine("Weird...Your user wasn't found...");
+				Console.WriteLine("Press any key to exit to main menu");
+				char keyPress = Console.ReadKey().KeyChar;
+				break;
 			}
 		}
 	}
