@@ -2,7 +2,6 @@
 using System.Text;
 
 namespace HangManSolo;
-
 public class UserManager
 {
 	private GameDbContext db = new();

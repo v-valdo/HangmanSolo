@@ -22,7 +22,7 @@ public class Menu
 			}
 
 			Console.Write("Password:");
-			string password = Console.ReadLine() ?? "0";
+			string password = ReadAndHidePassword() ?? "0";
 			try
 			{
 				var passwordHash = u.EncryptPassword(password, out byte[] salt);
@@ -47,7 +47,7 @@ public class Menu
 			Console.Write("Username: ");
 			string username = Console.ReadLine() ?? "0";
 			Console.Write("Password: ");
-			string password = Console.ReadLine() ?? "0";
+			string password = ReadAndHidePassword() ?? "0";
 
 			if (await u.Login(username, password))
 			{
@@ -65,6 +65,22 @@ public class Menu
 		}
 	}
 
+	private string ReadAndHidePassword()
+	{
+		string password = "";
+		ConsoleKeyInfo key;
+		do
+		{
+			key = Console.ReadKey(true);
+			if (key.Key != ConsoleKey.Enter)
+			{
+				password += key.KeyChar;
+			}
+		} while (key.Key != ConsoleKey.Enter);
+
+		Console.WriteLine();
+		return password;
+	}
 	public async Task PlayerMenu(string username)
 	{
 		while (true)
@@ -84,12 +100,18 @@ public class Menu
 					switch (c)
 					{
 						case 1:
+							Game round = new(user);
+							round.Play();
 							break;
 						case 2:
 							Console.Clear();
 							Console.WriteLine($"Your score is: {user.Score}");
+							Console.WriteLine("Games played: " + user.GamesPlayed);
 							Console.WriteLine("Press any key to continue");
 							Console.ReadLine();
+							break;
+						case 3:
+							HighScore();
 							break;
 					}
 				}
@@ -100,11 +122,23 @@ public class Menu
 			}
 			else
 			{
-				Console.WriteLine("Weird...Your user wasn't found...");
+				Console.WriteLine("Weird...your user wasn't found...");
 				Console.WriteLine("Press any key to exit to main menu");
-				char keyPress = Console.ReadKey().KeyChar;
+				Console.ReadKey();
 				break;
 			}
 		}
+	}
+
+	public void HighScore()
+	{
+		Console.Clear();
+		IEnumerable<User> highscore = db.Users.OrderByDescending(x => x.Score);
+		foreach (var user in highscore)
+		{
+			Console.WriteLine($"Username: {user.Username} | Score: {user.Score}");
+		}
+		Console.WriteLine("Press any key to continue");
+		Console.ReadKey();
 	}
 }

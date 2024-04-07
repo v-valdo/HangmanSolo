@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <None Update="filteredWords.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="words.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
