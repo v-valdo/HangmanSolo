@@ -4,6 +4,8 @@ namespace HangManSolo;
 public class GameDbContext : DbContext
 {
     public DbSet<User> Users { get; set; }
+
+    // enter postgres DB here
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     => optionsBuilder.UseNpgsql("Host=localhost;Port=5455;Database=hangman;Username=postgres;Password=postgres;");
 }

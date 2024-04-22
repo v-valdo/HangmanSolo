@@ -20,7 +20,7 @@ namespace HangManSolo
             Random rnd = new();
             string[] wordList = File.ReadAllLines("filteredWords.txt");
             string secretWord = wordList[rnd.Next(0, wordList.Length)];
-            Console.WriteLine($"\tThe secret word has been generated and {secretWord} is {secretWord.Length} characters long");
+            Console.WriteLine($"\tThe secret word has been generated and is {secretWord.Length} characters long");
             Console.WriteLine("\tPress any key to start playing...");
             Console.ReadKey();
             Round(secretWord);
@@ -67,6 +67,7 @@ namespace HangManSolo
                 if (string.IsNullOrEmpty(input))
                 {
                     Console.WriteLine("Please enter a valid guess.");
+                    Thread.Sleep(200);
                     continue;
                 }
 
