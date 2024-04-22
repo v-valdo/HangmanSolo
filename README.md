@@ -15,3 +15,6 @@ by default it filters out words under 10 chars
 # Screenshots
 
 ![alt text](https://i.imgur.com/FzPuVCF.jpeg)
+
+## Database snap of encrypted user logins:
+![db](https://i.imgur.com/ACQtGrA.png)
